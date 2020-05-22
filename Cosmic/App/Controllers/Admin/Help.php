@@ -109,11 +109,11 @@ class Help
             exit;
         }
 
-        Admin::sendTicketMessage(Helper::filterString($message), $ticket->id, request()->player->id);
+        Admin::sendTicketMessage($message, $ticket->id, request()->player->id);
         Log::addHelpTicketLog(request()->player->id, $ticket->id, 'SEND', 'message');
 
         if(Config::apiEnabled && request()->player->online) {
-            HotelApi::execute('alertuser', array('user_id' => $ticket->player_id, 'message' => 'Er is gereageerd op je helpdesk ticket!'));
+            HotelApi::execute('alertuser', array('user_id' => $ticket->player_id, 'message' => 'You received a response on your help ticket!'));
         }
 
         response()->json(["status" => "success", "message" => "Succesfully send a message to user"]);

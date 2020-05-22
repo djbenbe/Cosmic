@@ -85,6 +85,8 @@ class View
                     $twig->addGlobal('ban_messages', Admin::getBanMessages());
                     $twig->addGlobal('ban_times', Admin::getBanTime(request()->player->rank));
                 }
+            } else {
+                $twig->addGlobal('template', !isset($_COOKIE['template']) ? "light" : $_COOKIE['template']);
             }
         }
 

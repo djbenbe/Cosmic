@@ -51,9 +51,18 @@ class Club
             response()->json(["status" => "error", "message" => Locale::get('shop/club/already_vip')]);
         }
   
-        $this->settings->vip_badges = json_decode($this->settings->vip_badges, true);
-        foreach($this->settings->vip_badges as $badge) {
-            HotelApi::execute('givebadge', array('user_id' => request()->player->id, 'badge' => $badge['value']));
+        $vip_badges = json_decode($this->settings->vip_badges, true);
+        if(!empty($vip_badges)) {
+            foreach($vip_badges as $badge) {
+                HotelApi::execute('givebadge', array('user_id' => request()->player->id, 'badge' => ucfirst($badge['value'])));
+            }
+        }
+      
+        $vip_gift = json_decode($this->settings->vip_gift_items, true);
+        if(!empty($vip_gift)) {
+            foreach($vip_gift as $gift) {
+                HotelApi::execute('sendgift', array('user_id' => request()->player->id, 'itemid' => $gift['value'], 'message' => $this->settings->vip_gift_message));
+            }
         }
       
         if($this->settings->vip_membership_days != "lifetime") {

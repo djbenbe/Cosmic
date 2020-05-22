@@ -1302,6 +1302,7 @@ input:-webkit-autofill {
     max-width: 450px;
     margin: 20px auto;
     overflow: hidden;
+    color: #333;
 }
 
 .dialog-popup .mfp-close {
